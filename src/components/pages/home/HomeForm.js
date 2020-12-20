@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 const HomeForm = ({ tasks, setTasks, taskId, setTaskId }) => {
     /* estado que represtan la actual tarea que se crea o se edita */
     const [currentTask, setCurrentTask] = useState({
-        name: "",
+        responsable: "",
         description: ""
     })
     /* Efecto que carga la currentTask con la información correspondiente a la tarea a editar, si se va a crear una tarea (task) este efecto no hace nada. */
@@ -18,8 +18,8 @@ const HomeForm = ({ tasks, setTasks, taskId, setTaskId }) => {
 
     /* Función para validar elementos del formulario */
     const formValidation = (task, success) => {
-        const { name, description } = task
-        if (name.length < 3) {
+        const { responsable, description } = task
+        if (responsable.length < 3) {
             Swal.fire({
                 icon: 'error',
                 title: 'Algo anda mal',
@@ -42,12 +42,12 @@ const HomeForm = ({ tasks, setTasks, taskId, setTaskId }) => {
         const id = tasks.length > 0 ? (tasks[tasks.length - 1].id) + 1 : 1;
         const newTask = { ...currentTask, id }
         setTasks([...tasks, newTask])
-        resetForm()
         Swal.fire({
             icon: 'success',
             title: 'Felicitaciones',
             text: 'Tarea creada con éxito!'
-        })
+        }).then(() => resetForm())
+
     }
     /* Función para editar una tarea existente (task) al listado de tareas (tasks), mediante la búsqueda del índice. */
     const editTask = async () => {
@@ -61,19 +61,18 @@ const HomeForm = ({ tasks, setTasks, taskId, setTaskId }) => {
         }) */
 
         const index = tasks.findIndex(task => task.id === taskId)
-        tasks[index].name = currentTask.name;
+        tasks[index].responsable = currentTask.responsable;
         tasks[index].description = currentTask.description;
-        resetForm()
         Swal.fire({
             icon: 'success',
             title: 'Felicitaciones',
             text: 'Tarea modificada con éxito!'
-        })
+        }).then(() => resetForm())
     }
     /* Función que resetea el currentTask */
     const resetForm = () => {
         setCurrentTask({
-            name: "",
+            responsable: "",
             description: ""
         })
         setTaskId(null)
@@ -98,11 +97,11 @@ const HomeForm = ({ tasks, setTasks, taskId, setTaskId }) => {
     return (
         <Form onSubmit={handleSubmit} title={`${taskId ? "Edición" : "Creación"} de Tarea`}>
             <FormInput
-                label="Nombre"
-                id="nameInput"
-                value={currentTask.name}
+                label="Responsable"
+                id="responsableInput"
+                value={currentTask.responsable}
                 handleChange={handleChange}
-                name="name"
+                name="responsable"
             />
             <FormInput
                 type="textArea"

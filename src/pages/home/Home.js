@@ -5,8 +5,8 @@ import HomeTable from '../../components/pages/home/HomeTable';
 const Home = () => {
 
     const [tasks, setTasks] = useState([
-        { id: 1, name: "Limpiar", description: "zona 1" },
-        { id: 2, name: "Cocinar", description: "zona 2" }
+        { id: 1, responsable: "Limpiar", description: "zona 1" },
+        { id: 2, responsable: "Cocinar", description: "zona 2" }
     ])
 
     const [taskId, setTaskId] = useState(null)

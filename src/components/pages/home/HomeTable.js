@@ -4,7 +4,7 @@ import Table from "../../shared/tables/Table"
 
 const HomeTable = ({ tasks, setTaskId, taskId, setTasks }) => {
 
-    const headers = ["id,10", "Nombre,30", "Descripción,50", "Opciones,10"]
+    const headers = ["id,10", "Responsable,30", "Descripción,50", "Opciones,10"]
 
     const deleteTask = id => {
         const result = tasks.filter(task => task.id !== id)
@@ -18,13 +18,13 @@ const HomeTable = ({ tasks, setTaskId, taskId, setTasks }) => {
                 tasks.map(task => (
                     <tr key={task.id}>
                         <th className="w-10">{task.id}</th>
-                        <td className="w-30">{task.name}</td>
+                        <td className="w-30">{task.responsable}</td>
                         <td className="w-50">{task.description}</td>
                         <td className="th__table__icons w-10">
                             <span onClick={() => setTaskId(task.id)}>
-                                <SVGEdit size={15} color={(taskId && task.id === taskId) && "green"} />
+                                <SVGEdit size={15} color={(taskId && task.id === taskId) ? "green" : undefined} />
                             </span>
-                            <span onClick={() => deleteTask(task.id)} className={(taskId) && "d-none"}>
+                            <span onClick={() => deleteTask(task.id)} className={taskId && "d-none"}>
                                 <SVGDelete size={23} color="red" />
                             </span>
                         </td>
